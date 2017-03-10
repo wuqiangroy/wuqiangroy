@@ -18,7 +18,9 @@ def register():
     form = RegisterForm(request.args)
     if not form.validate():
         """error page"""
-    phone_number = form.phone_number.data.replace(" ", "")
+    username = form.username.data.replace(" ", "")
+    email = form.email.data.replace(" ", "")
     password = form.password.data.replace(" ", "")
+    password2 = form.password2.data.replace(" ", "")
 
-    """发送短信"""
+    """发送邮件"""
