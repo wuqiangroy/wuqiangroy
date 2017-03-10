@@ -8,8 +8,12 @@ from wtforms.validators import DataRequired, Length, Email, equal_to
 
 class RegisterForm(Form):
     """用户注册表单"""
-    phone_number = IntegerField(u"手机号", validators=[DataRequired(), Length(1, 11)])
-    password = PasswordField(u"密码", validators=[DataRequired()])
+    username = StringField(u"用户名", validators=[DataRequired(), Length(1, 30)])
+    email = StringField(u"邮箱", validators=[DataRequired(), Email()])
+    password = PasswordField(u"密码", validators=
+                             [DataRequired(), equal_to("password2",
+                                                       message=u"两次密码输入不同！")])
+    password2 = PasswordField(u"确认密码", validators=[DataRequired()])
     submit = SubmitField(u"注册")
 
 
