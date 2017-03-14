@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 
-import json
-from flask import request
+from flask import request, jsonify, render_template
 from flask_login import current_user
 from . import main
 from .forms import ProductForms
@@ -13,7 +12,7 @@ from ..errors import Errors
 @permission_required
 @main.route("/publish-product/", methods=["GET", "POST"])
 def publish_product():
-    """发布商品"""
+    """publish goods"""
 
     form = ProductForms(request.args)
     if not form.validate():
@@ -28,8 +27,7 @@ def publish_product():
         "category": None,
         "introduction": introduction
     }
-    data = json.dumps(data)
 
-    return Errors.SUCCESS, {'data': data}
+    return render_template("publish_goods.html")
 
 
