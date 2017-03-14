@@ -1,0 +1,27 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="14">
+            <item index="0" class="java.lang.String" itemvalue="mysql-connector-python-rf" />
+            <item index="1" class="java.lang.String" itemvalue="raven" />
+            <item index="2" class="java.lang.String" itemvalue="qrcode" />
+            <item index="3" class="java.lang.String" itemvalue="SQLAlchemy" />
+            <item index="4" class="java.lang.String" itemvalue="packaging" />
+            <item index="5" class="java.lang.String" itemvalue="uWSGI" />
+            <item index="6" class="java.lang.String" itemvalue="qiniu" />
+            <item index="7" class="java.lang.String" itemvalue="redis" />
+            <item index="8" class="java.lang.String" itemvalue="XlsxWriter" />
+            <item index="9" class="java.lang.String" itemvalue="yarl" />
+            <item index="10" class="java.lang.String" itemvalue="pyparsing" />
+            <item index="11" class="java.lang.String" itemvalue="xlrd" />
+            <item index="12" class="java.lang.String" itemvalue="Pillow" />
+            <item index="13" class="java.lang.String" itemvalue="flask" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
