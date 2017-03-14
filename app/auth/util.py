@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 
-import smtplib
 import threading
 
 from flask import current_app, render_template
 from flask_mail import Message
 from .. import mail
-
 
 
 class ThreadFun(object):
