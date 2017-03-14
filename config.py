@@ -13,7 +13,9 @@ class Config(object):
     SSL_DISABLE = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_RECORD_QUERIES = True
+    MAIL_SUBJECT_PREFIX = u"芳草志"
     MAIL_SERVER = "smtp-mail.outlook.com"
+    MAIL_SENDER = "wuqiangroy@live.com"
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
