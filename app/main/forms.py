@@ -6,9 +6,9 @@ from wtforms.validators import DataRequired
 
 
 class ProductForms(Form):
-    """商品表单"""
+    """goods forms"""
 
     name = StringField(u"商品名", validators=[DataRequired()])
-    category = SelectField(u"选择种类", coerce=int)
+    category = StringField(u"选择种类", validators=[DataRequired()])
     introduction = TextAreaField(u"简介")
     submit = SubmitField(u"发布")
