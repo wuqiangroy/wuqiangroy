@@ -1,12 +1,24 @@
 #!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, redirect, url_for
 from flask_login import current_user
+from app import db
 from . import main
 from .forms import ProductForms
 from ..decorator import permission_required
-from ..errors import Errors
+from ..models import Goods
+
+
+@main.route("/", methods=["GET", "POST"])
+@main.route("/home/", methods=["GET", "POST"])
+def index():
+    return render_template("home.html")
+
+
+@main("/sweet-grass/", methods=["GET", "POST"])
+def sweet_grass():
+    return render_template("sweet_grass.html")
 
 
 @permission_required
@@ -15,19 +27,28 @@ def publish_product():
     """publish goods"""
 
     form = ProductForms(request.args)
-    if not form.validate():
-        return Errors.NO_DATA, Errors.msg[Errors.NO_DATA]
+    if form.validate():
+        goods = Goods(
+            name=form.name.data.replace(" ", ""),
+            pic=form.pic.data,
+            category=form.category.data,
+            introduction=form.introduction.data,
+        )
+        db.session.add(goods)
+        db.session.commit()
+        name = form.name.data.replace(" ", "")
+        goods2 = Goods.query.filter_by(name=name).first()
+        return redirect(url_for("main.goods", id=goods2.id))
 
-    name = form.name.data.replace(" ", "")
-    # category =
-    introduction = form.introduction.data
+    return render_template("publish_goods.html", form=form)
 
-    data = {
-        "name": name,
-        "category": None,
-        "introduction": introduction
-    }
 
-    return render_template("publish_goods.html")
+@main.route("/goods/<id>")
+def goods_detail(id):
+    """goods detail page"""
+    goods = Goods.query.get_or_404(id)
+    return render_template("goods.html", goods=goods)
+
+
 
 
