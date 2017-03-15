@@ -9,6 +9,7 @@ class ProductForms(Form):
     """goods forms"""
 
     name = StringField(u"商品名", validators=[DataRequired()])
+    pic = StringField(u"图片")
     category = StringField(u"选择种类", validators=[DataRequired()])
     introduction = TextAreaField(u"简介")
     submit = SubmitField(u"发布")
