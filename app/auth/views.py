@@ -6,11 +6,6 @@ from . import auth
 from .forms import RegisterForm
 
 
-@auth.route("/", methods=['GET'])
-def home():
-    return render_template("home.html")
-
-
 @auth.route("/register/", methods=["GET", "POST"])
 def register():
     """用户注册"""
