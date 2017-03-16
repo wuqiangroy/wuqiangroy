@@ -3,11 +3,12 @@
 
 
 from wtforms import Form, StringField, IntegerField, SubmitField, PasswordField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, equal_to
+from wtforms.validators import DataRequired, Length, Email, equal_to, Regexp
 
 
 class RegisterForm(Form):
-    """用户注册表单"""
+    """user register form"""
+
     username = StringField(u"用户名", validators=[DataRequired(), Length(1, 30)])
     email = StringField(u"邮箱", validators=[DataRequired(), Email()])
     password = PasswordField(u"密码", validators=
@@ -18,7 +19,10 @@ class RegisterForm(Form):
 
 
 class UserForm(Form):
-    """用户详情表单"""
+    """user profile detail form"""
+
     username = StringField(u"昵称", validators=[DataRequired(), Length(1, 30)])
+    phone_number = IntegerField(u"电话号码", validators=[Regexp(
+        r"^1(3|4|5|7|8)[0-9]\d{8}$", message=u"号码格式错误！")])
     about_me = StringField(u"一句话描述", validators=[Length(1, 100)])
     email = StringField(u"邮箱", validators=[Email()])
