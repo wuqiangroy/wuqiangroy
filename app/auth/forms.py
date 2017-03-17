@@ -6,6 +6,14 @@ from wtforms import Form, StringField, IntegerField, SubmitField, PasswordField,
 from wtforms.validators import DataRequired, Length, Email, equal_to, Regexp
 
 
+class LoginForm(Form):
+    """user login form"""
+
+    username = StringField(u"用户名", validators=[DataRequired()])
+    password = PasswordField(u"密码", validators=[DataRequired()])
+    submit = SubmitField(u"登陆")
+
+
 class RegisterForm(Form):
     """user register form"""
 
