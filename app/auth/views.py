@@ -35,9 +35,10 @@ def login():
             # need session
             return redirect(url_for("main.sweet_grass"))
         flash(u"用户名或密码错误！")
+        return redirect(url_for("main.sweet_grass"))
     return render_template("login.html", form=form)
 
-    
+
 @login_required
 @auth.route("/logout/")
 def logout():
