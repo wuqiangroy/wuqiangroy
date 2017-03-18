@@ -2,7 +2,8 @@
 # _*_ coding:utf-8 _*_
 
 
-from wtforms import Form, StringField, IntegerField, SubmitField, PasswordField, TextAreaField
+from wtforms import Form, StringField, IntegerField, SubmitField,\
+    PasswordField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, equal_to, Regexp
 
 
@@ -11,6 +12,7 @@ class LoginForm(Form):
 
     username = StringField(u"用户名", validators=[DataRequired()])
     password = PasswordField(u"密码", validators=[DataRequired()])
+    remember_me = BooleanField(u"记住我的登陆")
     submit = SubmitField(u"登陆")
 
 
