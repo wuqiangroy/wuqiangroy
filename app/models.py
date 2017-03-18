@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 
+import json
 import hashlib
 from datetime import datetime
 
+from flask import current_app
 from werkzeug.security import generate_password_hash,check_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from app import db
 
@@ -44,6 +47,12 @@ class User(db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     email = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    confirm = db.Column(db.Boolean, default=False)
+
+    def general_confirm_token(self, expiration=3000):
+        s = Serializer(current_app.config["SECRET_KEY"], expiration)
+        return s.dumps({"confirm": self.id})
+
 
     @property
     def password(self):
