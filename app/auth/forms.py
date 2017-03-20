@@ -35,6 +35,7 @@ class UserForm(Form):
         r"^1(3|4|5|7|8)[0-9]\d{8}$", message=u"号码格式错误！")])
     about_me = StringField(u"一句话描述", validators=[Length(1, 100)])
     email = StringField(u"邮箱", validators=[Email()])
+    submit = SubmitField(u"确定")
 
 
 class ChangePwdForm(Form):
@@ -44,10 +45,22 @@ class ChangePwdForm(Form):
     new_password = PasswordField(u"请输入新密码", validators=[
         DataRequired(), equal_to("new_password2", message=u"两次密码输入不同")])
     new_password2 = PasswordField(u"确认密码", validators=[DataRequired()])
+    submit = SubmitField(u"确定")
 
 
 class ForgetPwdForm(Form):
     """user reset password form"""
+
     username = StringField(u"请输入用户名", validators=(DataRequired()))
     email = StringField(u"请输入注册邮件", validators=[DataRequired(), Email()])
+    submit = SubmitField(u"确定")
+
+
+class ChangeEmailForm(Form):
+    """user change email form"""
+
+    username = StringField(u"请输入用户名", validators=[DataRequired()])
+    password = PasswordField(u"请输入密码", validators=[DataRequired()])
+    new_email = StringField(u"请输入新邮箱",validators=[DataRequired(), Email()])
+    submit = SubmitField(u"确定")
 

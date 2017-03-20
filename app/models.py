@@ -49,11 +49,6 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
     confirm = db.Column(db.Boolean, default=False)
 
-    def general_confirm_token(self, expiration=3000):
-        s = Serializer(current_app.config["SECRET_KEY"], expiration)
-        return s.dumps({"confirm": self.id})
-
-
     @property
     def password(self):
         raise AttributeError("warning: you can not catch password!")
@@ -66,6 +61,18 @@ class User(db.Model):
     # verify the input password vs hashed password
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def general_confirm_token(self, expiration=3000):
+        s = Serializer(current_app.config["SECRET_KEY"], expiration)
+        return s.dumps({"confirm": self.id})
+
+    def general_reset_token(self, expiration=3000):
+        s = Serializer(current_app.config["SECRET_KEY"], expiration)
+        return s.dumps({"reset": self.id})
+
+    def general_change_email_token(self, new_email, expiration=3000):
+        s = Serializer(current_app.config["SECRET_KEY"], expiration)
+        return s.dumps({"change_mail": self.id, "new_email": new_email})
 
 
 
