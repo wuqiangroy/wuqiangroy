@@ -11,8 +11,8 @@ from ..models import User
 
 
 @auth.route("/register/", methods=["GET", "POST"])
-def register():
-    """用户注册"""
+def register_request():
+    """user register"""
 
     form = RegisterForm(request.args)
     if form.validate():
@@ -24,15 +24,22 @@ def register():
         token = user.general_confirm_token()
         send_mail(user.email, u"确认您的账户",
                   "auth/email/confirm", user=user, token=token)
-        return render_template("auth.email_confirm")
+        return redirect(url_for("auth.login"))
     return render_template("auth/register.html", form=form)
 
 
-@auth.route("/email-confirm/", methods=["GET", "POST"])
-def email_confirm():
-    """waiting page"""
-    # waiting 5 seconds automatic
+@auth.route("/confirm-email/<token>")
+def confirm_email(token):
+    """confirm the email"""
 
+    if current_user.confirmed:
+        return redirect(url_for("main.sweet_grass"))
+    elif current_user.confirm_email(token):
+        flash(u"邮箱已确认！感谢注册！")
+    else:
+        flash(u"确认链接不合法!")
+        return redirect(url_for("main.sweet_grass"))
+                    
 
 @auth.route("/login/", methods=["GET", "POST"])
 def login():
@@ -68,6 +75,8 @@ def change_password():
     user = User.query.filter_by(email=current_user.email).first()
     if form.validate():
         password = form.password.data
+        new_password = form.new_password.data
+        new_password2= form.new_password2.data
         if not user.verify_password(password):
             flash(u"密码错误！请重新输入")
             return redirect(url_for("auth.change_password"))

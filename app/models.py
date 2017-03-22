@@ -66,13 +66,50 @@ class User(db.Model):
         s = Serializer(current_app.config["SECRET_KEY"], expiration)
         return s.dumps({"confirm": self.id})
 
+    def confirm_email(self, token):
+        """confirm the email"""
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data["confirm"] != self.id:
+            return False
+        self.confirm = True
+        db.session.add(self)
+        return True
+
     def general_reset_token(self, expiration=3000):
         s = Serializer(current_app.config["SECRET_KEY"], expiration)
         return s.dumps({"reset": self.id})
 
+    def reset_token(self, token, new_password):
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data["reset"] != self.id:
+            return False
+        self.password = new_password
+        db.session.add(self)
+        return True
+
     def general_change_email_token(self, new_email, expiration=3000):
         s = Serializer(current_app.config["SECRET_KEY"], expiration)
         return s.dumps({"change_mail": self.id, "new_email": new_email})
+
+    def change_mail_token(self, token, new_mail):
+        s = Serializer(current_app.config["SECRET_KRY"])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data["change_mail"] != self.id:
+            return False
+        self.email = new_mail
+        db.session.add(self)
+        return True
 
 
 

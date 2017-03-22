@@ -2,7 +2,7 @@
 # _*_ coding:utf-8 _*_
 
 from flask import request, jsonify, render_template, redirect, url_for
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app import db
 from . import main
 from .forms import ProductForms
@@ -48,6 +48,18 @@ def goods_detail(id):
     """goods detail page"""
     goods = Goods.query.get_or_404(id)
     return render_template("goods.html", goods=goods)
+
+
+@login_required
+@main.route("/<username>/following/", methods=["GET", "POST"])
+def following(username):
+    pass
+
+
+@login_required
+@main.route("/<username>/follower/")
+def follower(username):
+    pass
 
 
 
